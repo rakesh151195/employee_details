@@ -5,6 +5,7 @@ import 'package:employee_detail/utils/imagepath.dart';
 import 'package:employee_detail/utils/textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
@@ -102,46 +103,74 @@ class _HomePageEmployeeListState extends State<HomePageEmployeeList> {
                         ],
                       ),
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                             minHeight: 100,
                             minWidth: double.infinity,
-                            maxHeight: 300),
+                            maxHeight: MediaQuery.of(context).size.width * 0.8),
                         child: ListView.builder(
                             itemCount: state.userlist.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      state.userlist[index].username,
-                                      style: AppStyle.fontD81,
-                                    ),
+                              return Slidable(
+                                  enabled: true,
+                                  endActionPane: ActionPane(
+                                    extentRatio: 0.2,
+                                    motion: StretchMotion(),
+                                    //  extentRatio: 1,
+                                    children: [
+                                      SlidableAction(
+                                        backgroundColor: Colors.red,
+                                        //spacing: 4,
+                                        foregroundColor: Colors.white,
+                                        icon: Icons.delete,
+                                        padding: EdgeInsets.zero,
+                                        onPressed: (context) => {
+                                          context
+                                              .read<EmployeeCubit>()
+                                              .deleteData(state.userlist[index])
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0.0, bottom: 0, right: 8, left: 8),
-                                    child: Text(
-                                      state.userlist[index].jobdescription,
-                                      style: AppStyle.fontF,
-                                    ),
-                                  ),
-                                  const Gap(8),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0.0, bottom: 8, right: 8, left: 8),
-                                    child: Text(
-                                      "From ${state.userlist[index].todate}",
-                                      style: AppStyle.fontF,
-                                    ),
-                                  ),
-                                  const Divider(
-                                    color: Colors.black,
-                                    thickness: 0.5,
-                                  )
-                                ],
-                              );
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          state.userlist[index].username,
+                                          style: AppStyle.fontD81,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 0.0,
+                                            bottom: 0,
+                                            right: 8,
+                                            left: 8),
+                                        child: Text(
+                                          state.userlist[index].jobdescription,
+                                          style: AppStyle.fontF,
+                                        ),
+                                      ),
+                                      const Gap(8),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 0.0,
+                                            bottom: 8,
+                                            right: 8,
+                                            left: 8),
+                                        child: Text(
+                                          "From ${state.userlist[index].todate}",
+                                          style: AppStyle.fontF,
+                                        ),
+                                      ),
+                                      const Divider(
+                                        color: Colors.black,
+                                        thickness: 0.5,
+                                      )
+                                    ],
+                                  ));
                             }),
                       ),
                       Row(
@@ -163,10 +192,10 @@ class _HomePageEmployeeListState extends State<HomePageEmployeeList> {
                         ],
                       ),
                       Container(
-                        constraints: const BoxConstraints(
+                        constraints: BoxConstraints(
                             minHeight: 100,
                             minWidth: double.infinity,
-                            maxHeight: 280),
+                            maxHeight: MediaQuery.of(context).size.width * 0.7),
                         child: ListView.builder(
                             itemCount: state.userlist.length,
                             itemBuilder: (BuildContext context, int index) {

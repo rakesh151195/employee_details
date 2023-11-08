@@ -161,7 +161,10 @@ class _CalendarWidgetnodateState extends State<CalendarWidgetnodate> {
                 children: [
                   hederButtonCont("No date", false),
                   const Gap(10),
-                  hederButtonCont("Today", true),
+                  hederButtonCont(
+                    "Today",
+                    true,
+                  ),
                 ],
               ),
               const Gap(20),
